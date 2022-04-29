@@ -1,6 +1,13 @@
+<<<<<<< HEAD
 untitled_project/
 base_checkpoints/
 node_modules/
+=======
+# Node Modules
+node_modules/
+my.json
+package-lock.json
+>>>>>>> main
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
