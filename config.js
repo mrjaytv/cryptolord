@@ -7,6 +7,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 const fs = require("fs");
 
+const { MongoClient } = require("mongodb");
+const { appendFile } = require("fs");
+
 // console.log(Date.parse("2019-01-01"));
 // const d = new Date(1546300800000);
 // console.log(d.toLocaleDateString());
@@ -29,30 +32,27 @@ for (let i = 0; i < 30; i++) {
 }
 console.log(last30days);
 
-const fetchdata = async (coinid, currency, fromdate, todate) => {
+const fetchdata = async (coinid, currency, fromdate, todate, documents) => {
   let url = `https://api.coingecko.com/api/v3/coins/${coinid}/market_chart/range?vs_currency=${currency}&from=${parseInt(
     fromdate / 1000
   )}&to=${parseInt(todate / 1000)}`;
   // console.log(url);
-  return axios
+  axios
     .get(
       url
       // `https://api.coingecko.com/api/v3/coins/${coinid}/market_chart?vs_currency=usd&days=1`
     )
     .then((response) => {
-      // console.log(response.data, typeof response.data);
-      documents.push(response.data);
+      createOneListing(response.data);
+      console.log(response.data);
     });
 };
 
-fs.writeFile("./my.json", JSON.stringify(documents), function (err) {
-  if (err) {
-    console.error("Crap happens");
-  }
-});
-
-const { MongoClient } = require("mongodb");
-const { appendFile } = require("fs");
+// fs.writeFile("./my.json", JSON.stringify(documents), function (err) {
+//   if (err) {
+//     console.error("Crap happens");
+//   }
+// });
 
 async function listDatabases(client) {
   databasesList = await client.db().admin().listDatabases();
@@ -60,12 +60,20 @@ async function listDatabases(client) {
   databasesList.databases.forEach((db) => console.log(` - ${db.name}`));
 }
 
+async function createOneListing(client, newListing){
+  // console.log(newListing);
+  result = await client.db("cryptoland").collection('listings').insertOne(newListing);
+  console.log(`${result.insertedCount} new listing(s) created with the following id(s):`);
+    console.log(result.insertedIds);    
+  // console.log(result);
+};
+
 const createMultipleListings = async (client, newListings) => {
   const db = client.db("cryptoland");
   const collection = db.collection("listings");
   // console.log(newListings);
   const result = await collection.insertMany(newListings);
-  console.log(result);
+  // console.log(result);
 };
 
 async function main() {
@@ -83,16 +91,20 @@ async function main() {
     await listDatabases(client);
 
     try {
+
+
+
       // Pull data from API
     var documents = [];
     for (let i = 0; i < last30days.length; i++) {
-      fetchdata("bitcoin", "usd", last30days[i + 1], last30days[i])
+      // console.log(typeof documents)
+      documents = fetchdata("bitcoin", "usd", last30days[i + 1], last30days[i], documents)
       };
     } catch (e){console.log(e)}
-    
-    console.log(documents);
 
-    await createMultipleListings(client, documents);
+    // console.log(documents);
+
+    // await createMultipleListings(client, documents);
   } catch (e) {
     console.error(e);
   } finally {
