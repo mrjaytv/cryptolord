@@ -32,7 +32,7 @@ for (let i = 0; i < 30; i++) {
 }
 console.log(last30days);
 
-const fetchdata = async (coinid, currency, fromdate, todate, documents) => {
+const fetchdata = async (coinid, currency, fromdate, todate, client) => {
   let url = `https://api.coingecko.com/api/v3/coins/${coinid}/market_chart/range?vs_currency=${currency}&from=${parseInt(
     fromdate / 1000
   )}&to=${parseInt(todate / 1000)}`;
@@ -43,7 +43,7 @@ const fetchdata = async (coinid, currency, fromdate, todate, documents) => {
       // `https://api.coingecko.com/api/v3/coins/${coinid}/market_chart?vs_currency=usd&days=1`
     )
     .then((response) => {
-      createOneListing(response.data);
+      createOneListing(client, response.data);
       console.log(response.data);
     });
 };
@@ -60,20 +60,16 @@ async function listDatabases(client) {
   databasesList.databases.forEach((db) => console.log(` - ${db.name}`));
 }
 
+// create a function that inserts a listing into the mongoDB database cryptoland and listings collection
 async function createOneListing(client, newListing){
-  // console.log(newListing);
-  result = await client.db("cryptoland").collection('listings').insertOne(newListing);
-  console.log(`${result.insertedCount} new listing(s) created with the following id(s):`);
-    console.log(result.insertedIds);    
-  // console.log(result);
+  const result = await client.db("cryptoland").collection('listings').insertOne(newListing);
+  console.log(result);
 };
 
+// create a function that inserts multiple listings into the mongoDB database cryptoland and listings collection
 const createMultipleListings = async (client, newListings) => {
-  const db = client.db("cryptoland");
-  const collection = db.collection("listings");
-  // console.log(newListings);
-  const result = await collection.insertMany(newListings);
-  // console.log(result);
+  const result = await client.db("cryptoland").collection('listings').insertMany(newListings);
+  console.log(result);
 };
 
 async function main() {
@@ -86,21 +82,41 @@ async function main() {
   const client = new MongoClient(uri);
   try {
     // Connect to the MongoDB cluster
+    //Connect to mongodb cluster and insert data into cryptoland database with listings collection
     await client.connect();
-    // Make the appropriate DB calls
+    console.log("Connected to MongoDB cluster");
     await listDatabases(client);
+    await createOneListing(client, fetchdata("bitcoin", "usd", last30days[2], last30days[30], client));
 
-    try {
+    await createOneListing(client, {
+      coinid: "bitcoin",
+      currency: "usd",
+      fromdate: Date.parse("2019-01-01"),
+      todate: Date.parse("2019-01-31"),
+    });
+    await createMultipleListings(client, [
+      {
+        coinid: "bitcoin",
+        currency: "usd",
+        fromdate: Date.parse("2019-01-01"),
+        todate: Date.parse("2019-01-31"),
+      },
+      {
+        coinid: "bitcoin",
+        currency: "usd",
+        fromdate: Date.parse("2019-02-01"),
+        todate: Date.parse("2019-02-28"),
+      },
+    ]);
 
-
-
-      // Pull data from API
-    var documents = [];
-    for (let i = 0; i < last30days.length; i++) {
-      // console.log(typeof documents)
-      documents = fetchdata("bitcoin", "usd", last30days[i + 1], last30days[i], documents)
-      };
-    } catch (e){console.log(e)}
+    // try {
+    //   // Pull data from API
+    // // var documents = [];
+    // for (let i = 0; i < last30days.length; i++) {
+    //   // console.log(typeof documents)
+    //     await fetchdata("bitcoin", "usd", last30days[i + 1], last30days[i], client)
+    //   };
+    // } catch (e){console.log(e)}
 
     // console.log(documents);
 
