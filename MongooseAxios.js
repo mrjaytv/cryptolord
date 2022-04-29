@@ -12,20 +12,35 @@ connectionString =
 mongoose
   .connect(connectionString, { useNewUrlParser: true })
   .then(() => {
-    console.log("Successfully connected");
+    console.log("Successfully connected to MongoDB Atlas!");
+    // console.log(last30days[2]);
 
-    for (index in last30days) {
-      if (index != 0) {
-        fetchdata("bitcoin", "usd", last30days[index], last30days[index - 1]);
+    let fromdate = last30days[3];
+    let todate = last30days[2];
+
+    Data.findOne({
+      coinid: "bitcoin",
+      currency: "usd",
+      fromdate: fromdate,
+      todate: todate,
+    }).then((result) => {
+      if (result == null) {
+        console.log("No data found in MongoDB, fetching from API instead");
+        fetchdataAPI("bitcoin", "usd", fromdate, todate);
+      } else {
+        console.log(
+          `Found a document result: ${result._id}, ${result.currency}, ${result.coinid}, ${result.fromdate}, ${result.todate}`
+          //   result
+        );
       }
-    }
+    });
   })
   .catch((e) => {
     console.log("Error connecting to MongoDB Atlas... Exiting now...", e);
   });
 
 //This function is called by the server to get the data from the API and transfers it to the database
-const fetchdata = async (coinid, currency, fromdate, todate) => {
+const fetchdataAPI = async (coinid, currency, fromdate, todate) => {
   let fetchURL = `https://api.coingecko.com/api/v3/coins/${coinid}/market_chart/range?vs_currency=${currency}&from=${parseInt(
     fromdate / 1000
   )}&to=${parseInt(todate / 1000)}`;
@@ -34,7 +49,7 @@ const fetchdata = async (coinid, currency, fromdate, todate) => {
   axios
     .get(fetchURL)
     .then(function (response) {
-      onSuccess(coinid, currency, fromdate, todate, response);
+      onAPIFetchSuccess(coinid, currency, fromdate, todate, response);
     })
     .catch(function (error) {
       console.log(error);
@@ -43,7 +58,9 @@ const fetchdata = async (coinid, currency, fromdate, todate) => {
 
 let last30days = [];
 for (let i = 0; i < 30; i++) {
-  const today = new Date(Date.now()).getTime();
+  let today = new Date(Date.now()).getTime();
+  // set today to midnight
+  today = new Date(today).setHours(0, 0, 0, 0);
   const date = new Date(today - i * 24 * 60 * 60 * 1000);
   // console.log(date.toLocaleDateString());
   last30days.push(Date.parse(date));
@@ -60,7 +77,7 @@ var repSchema = mongoose.Schema({
 });
 var Data = mongoose.model("MarketHistory", repSchema);
 
-function onSuccess(coinid, currency, fromdate, todate, response) {
+function onAPIFetchSuccess(coinid, currency, fromdate, todate, response) {
   var data = new Data();
   data.data = response.data;
   data.datakeys = Object.keys(response.data);
@@ -69,15 +86,15 @@ function onSuccess(coinid, currency, fromdate, todate, response) {
   data.fromdate = fromdate;
   data.todate = todate;
 
-  console.log(Object.keys(data));
+  //   console.log(Object.keys(data));
   Object.keys(data).forEach(function (key) {
-    console.log(JSON.stringify(data[key]));
+    // console.log(JSON.stringify(data[key]));
   });
 
   data
     .save()
     .then((result) => {
-      console.log(result);
+      console.log("Inserted new documents successfully", result);
     })
     .catch((e) => {
       console.log(e);
