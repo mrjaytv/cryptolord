@@ -1,19 +1,14 @@
 var mongoose = require("mongoose");
 var axios = require("axios");
 
-process.on("unhandledRejection", (reason, promise) => {
-  console.log("Reason: ", reason, "promise: ", promise);
-});
-
 //All calls out of the server
 connectionString =
   "mongodb+srv://cryptolord:cryptolordpass@cluster0.0tmx0.mongodb.net/cryptoland?retryWrites=true&w=majority";
-// connectionString = `mongodb+srv://${user}:${password}@${url}?retryWrites=true`;
+
 mongoose
   .connect(connectionString, { useNewUrlParser: true })
   .then(() => {
     console.log("Successfully connected to MongoDB Atlas!");
-    // console.log(last30days[2]);
 
     let fromdate = last30days[3];
     let todate = last30days[2];
@@ -30,7 +25,6 @@ mongoose
       } else {
         console.log(
           `Found a document result: ${result._id}, ${result.currency}, ${result.coinid}, ${result.fromdate}, ${result.todate}`
-          //   result
         );
       }
     });
@@ -85,11 +79,6 @@ function onAPIFetchSuccess(coinid, currency, fromdate, todate, response) {
   data.currency = currency;
   data.fromdate = fromdate;
   data.todate = todate;
-
-  //   console.log(Object.keys(data));
-  Object.keys(data).forEach(function (key) {
-    // console.log(JSON.stringify(data[key]));
-  });
 
   data
     .save()
