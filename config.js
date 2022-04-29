@@ -30,7 +30,7 @@ for (let i = 0; i < 30; i++) {
   // console.log(date.toLocaleDateString());
   last30days.push(Date.parse(date));
 }
-console.log(last30days);
+// console.log(last30days);
 
 const fetchdata = async (coinid, currency, fromdate, todate, client) => {
   let url = `https://api.coingecko.com/api/v3/coins/${coinid}/market_chart/range?vs_currency=${currency}&from=${parseInt(
@@ -43,8 +43,9 @@ const fetchdata = async (coinid, currency, fromdate, todate, client) => {
       // `https://api.coingecko.com/api/v3/coins/${coinid}/market_chart?vs_currency=usd&days=1`
     )
     .then((response) => {
-      createOneListing(client, response.data);
       console.log(response.data);
+      createOneListing(client, response.data);
+      return response.data;
     });
 };
 
