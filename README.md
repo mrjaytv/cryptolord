@@ -4,7 +4,7 @@
 
 Our group is currently in active communication via Slack, Discord, Zoom, Google Docs and Git.
 
-##  Overview of Scripts
+## Overview of Scripts
 
 This project currently has several working scripts. First, **MongooseAxios.js** has a function 
 ```getData(coinid:string, currency: string)```
