@@ -1,4 +1,5 @@
 // Trying to replicate dataExploration.ipynb in Javascript using Danfo.js.
+// Proof of concept.
 document.addEventListener("DOMContentLoaded", () => {
   dfd
     .readCSV(
