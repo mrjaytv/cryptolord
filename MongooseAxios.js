@@ -31,10 +31,10 @@ const getData = async (coinid, currency) => {
         let fromdate = last30days[i].today;
         let todate = last30days[i].tonight;
 
-        if (fromdate == today) {
-          console.log(`this is today`);
-          fetchdataAPIMarketChartToday(coinid, currency);
-        }
+        // if (fromdate == today) {
+        //   console.log(`this is today`);
+        //   fetchdataAPIMarketChartToday(coinid, currency);
+        // }
         Data.findOne({
           coinid: coinid,
           currency: currency,
@@ -52,7 +52,7 @@ const getData = async (coinid, currency) => {
               //   }
             } else {
               console.log(
-                `Found a document result from MongoDB: ${result._id}, ${result.currency}, ${result.coinid}, ${result.fromdate}, ${result.todate}`
+                `Found a document result from MongoDB: ${result._id},\nQuery: ${result.currency}, ${result.coinid}, ${result.fromdate}, ${result.todate}`
               );
               if (result.fromdate == undefined) {
                 console.log("BAD DATA FOUND, DELETING FROM DB");
@@ -68,6 +68,8 @@ const getData = async (coinid, currency) => {
                       : "No document found to delete"
                   );
                 });
+              } else {
+                return result;
               }
             }
           })
@@ -81,8 +83,9 @@ const getData = async (coinid, currency) => {
     });
 };
 //Call This function to get the data from the database or from the API, trying the database first
-// getData("bitcoin", "usd");
-getData("solana", "usd");
+getData("bitcoin", "usd");
+// getData("solana", "usd");
+getData("ethereum", "usd");
 
 //This function is called by the server to get the data from the API and transfers it to the database
 const fetchdataAPI = async (coinid, currency, fromdate, todate) => {
