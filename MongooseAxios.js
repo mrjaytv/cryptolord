@@ -83,9 +83,9 @@ const getData = async (coinid, currency) => {
     });
 };
 //Call This function to get the data from the database or from the API, trying the database first
-getData("bitcoin", "usd");
+// getData("bitcoin", "usd");
 // getData("solana", "usd");
-getData("ethereum", "usd");
+// getData("ethereum", "usd");
 
 //This function is called by the server to get the data from the API and transfers it to the database
 const fetchdataAPI = async (coinid, currency, fromdate, todate) => {
