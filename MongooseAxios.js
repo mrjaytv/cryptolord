@@ -19,7 +19,7 @@ for (let i = 0; i < 30; i++) {
   last30days.push(date);
 }
 
-const getData = async (coinid, currency) => {
+export const getData = async (coinid, currency) => {
   mongoose
     .connect(MONGO_CONNECTION_STRING, { useNewUrlParser: true })
     .then(() => {
@@ -78,12 +78,16 @@ const getData = async (coinid, currency) => {
               "Error connecting to MongoDB Atlas... Exiting now...",
               e
             );
+          })
+          .then((result) => {
+            // console.log(result);
+            return result;
           });
       }
     });
 };
 //Call This function to get the data from the database or from the API, trying the database first
-// getData("bitcoin", "usd");
+getData("bitcoin", "usd");
 // getData("solana", "usd");
 // getData("ethereum", "usd");
 
@@ -100,7 +104,7 @@ const fetchdataAPI = async (coinid, currency, fromdate, todate) => {
       if (response.data.prices[0] == undefined) {
         console.log(`Failed to find data, was returned: `, response.data);
       } else {
-        onAPIFetchSuccess(coinid, currency, fromdate, todate, response);
+        return onAPIFetchSuccess(coinid, currency, fromdate, todate, response);
       }
     })
     .catch(function (error) {
@@ -118,7 +122,7 @@ const fetchdataAPIMarketChartToday = async (coinid, currency) => {
       if (response.data.prices[0] == undefined) {
         console.log(`Failed to find data, was returned: `, response.data);
       } else {
-        onAPIFetchSuccess(coinid, currency, today, tonight, response);
+        onAPIFetchSuccess(coinid, currency, today, tonight, response).then();
       }
     })
     .catch(function (error) {
