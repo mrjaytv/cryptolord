@@ -19,7 +19,7 @@ for (let i = 0; i < 30; i++) {
   last30days.push(date);
 }
 
-export const getData = async (coinid, currency) => {
+const getData = async (coinid, currency) => {
   mongoose
     .connect(MONGO_CONNECTION_STRING, { useNewUrlParser: true })
     .then(() => {
