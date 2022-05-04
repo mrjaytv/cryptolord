@@ -14,5 +14,9 @@ This project currently has several working scripts. First, **MongooseAxios.js** 
 
 The second script is **dataExploration.ipynb** which is a JuypterNotebook file that pulls sample testing data from the mongoDB instance, performs some preprocessing and implements a neural network model. This work is mostly a proof of concept since the current data schema in the database has changed and we still need to implement "Data Windowing" which is splicing the data into "window" sections that will be used for final training and testing.
 
+### Overview of the Data
+
+This CoinGecko data is cryptocurrency price vs time data of the shape ``` {data: {[prices], [market_caps], [total_volumes]}} ```. Starting in dataExploration5 we have moved on to the CryptoCompare API which has minutely OHLC (open high low close) data for cryptocurrencies. We have thus far pulled data for *bitcoin, solana and ethereum*.
+
 ## Installation(tbd)
 ## Usage (tbd)
