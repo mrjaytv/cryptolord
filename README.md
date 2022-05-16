@@ -2,7 +2,7 @@
 
 ## Description
 
-The motivation behind this project is to help educate consumers on precise times to buy and sell crypto shares. In a booming world of blockchain technology, everyone wants to get their hands on the next crypto to explode onto the markets. Our goal is to gather all of the up to the second crypto information that will help our readers make the best decisions going forward. What we hope to convey is proper trustworthy information, in a world full of self proclaimed crypto experts.
+The motivation behind this project is to help educate consumers on precise times to buy and sell crypto shares. In a booming world of blockchain technology, everyone wants to get their hands on the next crypto to explode onto the markets. Our goal is to gather all of the up to the second crypto information that will help our readers make the best decisions going forward whether it be to buy, sell, or hold on to their coins. What we hope to convey is proper trustworthy information using machine learning and data analysis, in a world full of self proclaimed crypto experts.
 
 ### [Google Slides Presentation](https://docs.google.com/presentation/d/1lz_TqHZvk9aC_CprWLijcdRe-dhyxgD0O0yOvNl9FVI/edit?usp=sharing)
 
