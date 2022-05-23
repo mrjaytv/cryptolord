@@ -30,6 +30,44 @@ Then, separate the data from its **buy_sell_hold** label and perform window gene
 
 Finally we have a visualization file that that renders our data as well as our predictions.
 
+## Description of Outputs
+
+### Short Window Model Comparison:
+The image below shows the comparison of the different machine learning models with shorter windows being used for data sampling. The LSTM model is the best performing model.
+
+![shortWindowModelComparison.png](./Images/shortWindowModelComparison.png)
+
+
+### Long Window Model Comparison:
+The image below makes a comparison between the different machine learning models with longer windows being used for data sampling. The LSTM model is the best performing model.
+
+![longWindowModelComparison.png](./Images/longWindowModelComparison.png)
+
+### Outputs Combined:
+The combined image that follows, showcases the Average True Range (ATR) and the Moving Average Convergence Divergence (MACD) of the Bitcoin data. It also show cases the ballbinger bands in the first graph. The second graph shows the MACD and the MACD Signal. The third graph shows the RSI and the ADX, while the final graph shows the volume.
+
+![output.png](./Images/output.png)
+
+### Relative Extremas:
+This image that follows, shows the relative extrema of the Bitcoin data. The red line is the minimum and the blue line is the maximum.
+
+![relExtrema.png](./Images/relExtrema.png)
+
+### Window Generation Code:
+The following image shows the code used to generate the windows.
+
+![windowGenerationCode.png](./Images/windowGenerationcode.png)
+
+### Sample Outputs:
+
+Finally, the images below show the sample outputs of our predictions during the machine learning process (testing and training the models).
+
+![sampleOutput1.png](./Images/sampleOutput1.png)
+
+![sampleOutput2.png](./Images/sampleOutput2.png)
+
+![sampleOutput3.png](./Images/sampleOutput3.png)
+
 ## Future Work
 
 Moving forwards with this work, we would like to clean our workflows and render estimations of profit and loss based on buys and sells recommended by the model. Further we would like to fine-tune our model based on different time-frames, metrics and indicators and generally perform a sweep of the number of neurons and epochs.
