@@ -6,7 +6,7 @@ The motivation behind this project is to help educate consumers on precise times
 
 ### [Google Slides Presentation](https://docs.google.com/presentation/d/1lz_TqHZvk9aC_CprWLijcdRe-dhyxgD0O0yOvNl9FVI/edit?usp=sharing)
 
-### [Tableau Dashboard](https://public.tableau.com/app/profile/mubeen.ahmed.khan/viz/Cryptolord/MinutelyDatawIndicators)
+### [Tableau Dashboard](https://public.tableau.com/app/profile/mubeen.ahmed.khan/viz/Cryptolord/CryptolordStory)
 
 ## Communication Protocols
 
