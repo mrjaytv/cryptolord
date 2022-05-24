@@ -1,5 +1,22 @@
 # cryptolord
 
+-   [cryptolord](#cryptolord)
+    -   [Description](#description)
+        -   [Google Slides Presentation](#google-slides-presentation)
+        -   [Tableau Dashboard](#tableau-dashboard)
+    -   [Communication Protocols](#communication-protocols)
+    -   [Overview of Scripts](#overview-of-scripts)
+        -   [Overview of the Data](#overview-of-the-data)
+    -   [Description of Workflow](#description-of-workflow)
+    -   [Description of Outputs](#description-of-outputs)
+        -   [Short Window Model Comparison:](#short-window-model-comparison)
+        -   [Long Window Model Comparison:](#long-window-model-comparison)
+        -   [Outputs Combined:](#outputs-combined)
+        -   [Relative Extremas:](#relative-extremas)
+        -   [Window Generation Code:](#window-generation-code)
+        -   [Sample Outputs:](#sample-outputs)
+    -   [Future Work](#future-work)
+
 ## Description
 
 The motivation behind this project is to help educate consumers on precise times to buy and sell crypto shares. In a booming world of blockchain technology, everyone wants to get their hands on the next crypto to explode onto the markets. Our goal is to gather all of the up to the second crypto information that will help our readers make the best decisions going forward whether it be to buy, sell, or hold on to their coins. What we hope to convey is proper trustworthy information using machine learning and data analysis, in a world full of self proclaimed crypto experts.
@@ -33,27 +50,31 @@ Finally we have a visualization file that that renders our data as well as our p
 ## Description of Outputs
 
 ### Short Window Model Comparison:
+
 The image below shows the comparison of the different machine learning models with shorter windows being used for data sampling. The LSTM model is the best performing model.
 
 ![shortWindowModelComparison.png](./Images/shortWindowModelComparison.png)
 
-
 ### Long Window Model Comparison:
+
 The image below makes a comparison between the different machine learning models with longer windows being used for data sampling. The LSTM model is the best performing model.
 
 ![longWindowModelComparison.png](./Images/longWindowModelComparison.png)
 
 ### Outputs Combined:
+
 The combined image that follows, showcases the Average True Range (ATR) and the Moving Average Convergence Divergence (MACD) of the Bitcoin data. It also show cases the ballbinger bands in the first graph. The second graph shows the MACD and the MACD Signal. The third graph shows the RSI and the ADX, while the final graph shows the volume.
 
 ![output.png](./Images/output.png)
 
 ### Relative Extremas:
+
 This image that follows, shows the relative extrema of the Bitcoin data. The red line is the minimum and the blue line is the maximum.
 
 ![relExtrema.png](./Images/relExtrema.png)
 
 ### Window Generation Code:
+
 The following image shows the code used to generate the windows.
 
 ![windowGenerationCode.png](./Images/windowGenerationcode.png)
