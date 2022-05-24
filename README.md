@@ -77,7 +77,7 @@ This image that follows, shows the relative extrema of the Bitcoin data. The red
 
 The following image shows the code used to generate the windows.
 
-![windowGenerationCode.png](./Images/windowGenerationcode.png)
+![windowGenerationCode.png](./Images/windowGenerationCode.png)
 
 ### Sample Outputs:
 
